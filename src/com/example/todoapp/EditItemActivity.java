@@ -1,20 +1,34 @@
 package com.example.todoapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 
 public class EditItemActivity extends Activity {
+    private int itemIdx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item);
         String itemText = getIntent().getStringExtra("item");
+        itemIdx = getIntent().getIntExtra("itemIdx", -1);
         EditText editItem = (EditText) findViewById(R.id.editItem);
         editItem.setText(itemText);
+    }
+    
+    public void saveItem(View v) {
+        EditText editItem = (EditText) findViewById(R.id.editItem);
+        String itemText = editItem.getText().toString();
+        Intent data = new Intent();
+        data.putExtra("item", itemText);
+        data.putExtra("itemIdx", itemIdx);
+        setResult(RESULT_OK, data);
+        finish();
     }
 
     @Override

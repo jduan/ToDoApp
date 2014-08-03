@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 public class TodoActivity extends Activity {
+    private static final int REQUEST_CODE = 20;
     private ArrayList<String> todoItems;
     ArrayAdapter<String> itemsAdapater;
     ListView lvItems;
@@ -45,7 +46,8 @@ public class TodoActivity extends Activity {
                     int position, long id) {
                 Intent i = new Intent(TodoActivity.this, EditItemActivity.class);
                 i.putExtra("item", todoItems.get(position));
-                startActivity(i);
+                i.putExtra("itemIdx", position);
+                startActivityForResult(i, REQUEST_CODE);
             }
         });
 
@@ -91,6 +93,17 @@ public class TodoActivity extends Activity {
         edNewItem.setText("");
         System.out.println("added item to view");
         saveToFile();
+    }
+    
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            String itemText = data.getExtras().getString("item");
+            int itemIdx = data.getIntExtra("itemIdx", -1);
+            todoItems.set(itemIdx, itemText);
+            itemsAdapater.notifyDataSetChanged();
+            saveToFile();
+            System.out.println("new item text: " + itemText);
+        }
     }
 
     @Override
