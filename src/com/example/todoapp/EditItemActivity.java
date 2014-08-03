@@ -19,6 +19,8 @@ public class EditItemActivity extends Activity {
         itemIdx = getIntent().getIntExtra("itemIdx", -1);
         EditText editItem = (EditText) findViewById(R.id.editItem);
         editItem.setText(itemText);
+        editItem.requestFocus();
+        editItem.setSelection(editItem.getText().length());
     }
     
     public void saveItem(View v) {
