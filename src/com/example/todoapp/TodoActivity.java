@@ -1,16 +1,38 @@
 package com.example.todoapp;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
 
 public class TodoActivity extends Activity {
+	private ArrayList<String> todoItems;
+	ArrayAdapter<String> itemsAdapater;
+	ListView lvItems;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_todo);
+		
+		lvItems = (ListView) findViewById(R.id.lvItems);
+		todoItems = new ArrayList<String>();
+		itemsAdapater = new ArrayAdapter<>(this,  android.R.layout.simple_list_item_1, todoItems);
+		lvItems.setAdapter(itemsAdapater);
+		todoItems.add("Item 1");
+		todoItems.add("Item 2");
+	}
+	
+	public void addTodoItem(View v) {
+		EditText edNewItem = (EditText) findViewById(R.id.etAddItem);
+		itemsAdapater.add(edNewItem.getText().toString());
+		edNewItem.setText("");
 	}
 
 	@Override
