@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -27,8 +29,22 @@ public class TodoActivity extends Activity {
 		lvItems.setAdapter(itemsAdapater);
 		todoItems.add("Item 1");
 		todoItems.add("Item 2");
+		setupListViewListener();
 	}
 	
+	private void setupListViewListener() {
+		lvItems.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				todoItems.remove(position);
+				itemsAdapater.notifyDataSetChanged();
+				return true;
+			}
+		});
+	}
+
 	public void addTodoItem(View v) {
 		EditText edNewItem = (EditText) findViewById(R.id.etAddItem);
 		itemsAdapater.add(edNewItem.getText().toString());
