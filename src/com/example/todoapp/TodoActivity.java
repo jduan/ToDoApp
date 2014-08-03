@@ -8,11 +8,13 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -37,6 +39,16 @@ public class TodoActivity extends Activity {
     }
 
     private void setupListViewListener() {
+        lvItems.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                    int position, long id) {
+                Intent i = new Intent(TodoActivity.this, EditItemActivity.class);
+                i.putExtra("item", todoItems.get(position));
+                startActivity(i);
+            }
+        });
+
         lvItems.setOnItemLongClickListener(new OnItemLongClickListener() {
 
             @Override
