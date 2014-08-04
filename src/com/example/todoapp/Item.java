@@ -1,8 +1,13 @@
 package com.example.todoapp;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Item {
+public class Item implements Serializable{
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     private long id;
     private String action;
     private Date dueDate;

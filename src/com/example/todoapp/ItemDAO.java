@@ -67,4 +67,13 @@ public class ItemDAO {
         item.setAction(cursor.getString(1));
         return item;
     }
+
+    public void saveItem(Item item) {
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.COLUMN_ACTION, item.getAction());
+        values.put(MySQLiteHelper.COLUMN_ID, item.getId());
+        String whereClause = "_id = " + item.getId();
+        int count = database.update(MySQLiteHelper.TABLE_ITEMS, values, whereClause, null);
+        System.out.println("updated " + count + " rows");
+    }
 }

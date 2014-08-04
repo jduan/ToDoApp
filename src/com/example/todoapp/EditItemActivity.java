@@ -10,15 +10,16 @@ import android.widget.EditText;
 
 public class EditItemActivity extends Activity {
     private int itemIdx;
+    private Item item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item);
-        String itemText = getIntent().getStringExtra("item");
+        item = (Item) getIntent().getSerializableExtra("item");
         itemIdx = getIntent().getIntExtra("itemIdx", -1);
         EditText editItem = (EditText) findViewById(R.id.editItem);
-        editItem.setText(itemText);
+        editItem.setText(item.getAction());
         editItem.requestFocus();
         editItem.setSelection(editItem.getText().length());
     }
@@ -26,8 +27,9 @@ public class EditItemActivity extends Activity {
     public void saveItem(View v) {
         EditText editItem = (EditText) findViewById(R.id.editItem);
         String itemText = editItem.getText().toString();
+        item.setAction(itemText);
         Intent data = new Intent();
-        data.putExtra("item", itemText);
+        data.putExtra("item", item);
         data.putExtra("itemIdx", itemIdx);
         setResult(RESULT_OK, data);
         finish();
